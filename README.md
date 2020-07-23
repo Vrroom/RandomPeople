@@ -8,8 +8,6 @@ To run:
 
 # Examples
 
-![Alt text](Example1)
 <img src="./Examples/body1.svg">
 
-![Alt text](Example2)
 <img src="./Examples/body2.svg">
