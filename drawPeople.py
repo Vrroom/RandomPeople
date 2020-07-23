@@ -72,6 +72,6 @@ def flatten(l) :
         return paths1 + paths2
 
 if __name__ == "__main__": 
-    for i in range(10) :
+    for i in range(50) :
         p = flatten(person())
-        save(flatten(person()), f'body{i}.svg')
+        save(flatten(person()), f'./Data/body{i}.svg')
