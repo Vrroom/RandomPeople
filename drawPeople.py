@@ -1,4 +1,5 @@
 from functools import reduce
+import xml.etree.ElementTree as etree
 import svgpathtools as svg
 import random
 
@@ -20,15 +21,35 @@ def circle (r) :
     arcs.append(svg.Arc(-r + 0j, r + r * 1j, 0, False, True, r + 0j))
     return svg.Path(*arcs)
 
-def person() :
+def person(doc) :
     """ Assume 100 by 100 viewbox """
+    doc.set_viewbox('0 0 100 100')
     torsoHeight = random.randint(30, 50)
     torsoWidth = random.randint(20, 30)
+
     torso_ = torso(torsoHeight, torsoWidth)
     legs_ = legs(torsoHeight, torsoWidth)
     arms_ = arms(torsoHeight, torsoWidth)
     head_ = head(torsoHeight, torsoWidth)
-    return [head_, torso_, arms_, legs_]
+
+    top = doc.add_group(group_attribs={"fill":"black"})
+    body = doc.add_group(parent=top)
+    
+    doc.add_path(head_, group=body)
+    doc.add_path(torso_, group=body)
+
+    limbs = doc.add_group(parent=top)
+
+    legsGroup = doc.add_group(parent=limbs)
+    armsGroup = doc.add_group(parent=limbs)
+    
+    for a in arms_ :
+        doc.add_path(a, group=armsGroup)
+
+    for l in legs_ :
+        doc.add_path(l, group=legsGroup)
+
+    return doc
 
 def legs(torsoHeight, torsoWidth): 
     legsY = 50 + torsoHeight / 2
@@ -72,6 +93,8 @@ def flatten(l) :
         return paths1 + paths2
 
 if __name__ == "__main__": 
-    for i in range(50) :
-        p = flatten(person())
-        save(flatten(person()), f'./Data/body{i}.svg')
+    for i in range(1, 51) :
+        doc = svg.Document(None)
+        doc = person(doc)
+        with open(f'./Data/body{i}.svg', 'wb') as fd: 
+            fd.write(etree.tostring(doc.tree.getroot(), encoding='utf8', method='xml'))
