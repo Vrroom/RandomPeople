@@ -8,8 +8,8 @@ class Limb () :
         self.top = rectangle(h1, w1)
         self.joint = (h1/2) * 1j
         self.joint2 = w1 + (h1/2) * 1j
-        self.bottom = rectangle(h2, w2).translated(joint2 - (h2/2) * 1j)
-        self.pseudoLine = svg.Line(start=joint, end=joint2)
+        self.bottom = rectangle(h2, w2).translated(self.joint2 - (h2/2) * 1j)
+        self.pseudoLine = svg.Line(start=self.joint, end=self.joint2)
 
     def translated(self, t) : 
         newLimb = deepcopy(self)

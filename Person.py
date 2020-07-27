@@ -12,21 +12,14 @@ class Person () :
         self.center = 50 + 50j
         headRotation = random.randint(-30, 30)
         torsoRotation = random.randint(-15, 15)
-        armsRotation = [random.randint(0, 360) for _ in range(4)]
-        legsRotaton = [random.randint(0, 360) for _ in range(4)]
-        self.torso = Torso(random.randint(30, 50), random.randint(20, 30))
-                        .translated(50 + 50j)
-                        .rotated(torsoRotation)
-        self.head = Head(random.randint(5, 10))
-                        .rotated(headRotation)
-        self.arms = [Limb(*self.limbDimensions())
-                        .rotated(random.randint(0, 360))
-                        .bottomRotated(random.randint(0, 360))
-                     for _ in range(2)]
-        self.legs = [Limb(*self.limbDimensions())
-                        .rotated(random.randint(0, 360))
-                        .bottomRotated(random.randint(0, 360))
-                     for _ in range(2)]
+        h, w = random.randint(20, 35), random.randint(15, 25)
+        diff = self.center - (w + (h * 1j))/2
+        self.torso = Torso(h, w).translated(diff).rotated(torsoRotation)
+        self.head = Head(random.randint(5, 10)).rotated(headRotation)
+        self.arms = [Limb(*self.limbDimensions()).rotated(random.randint(135, 225)).bottomRotated(random.randint(-30, 30)),
+                     Limb(*self.limbDimensions()).rotated(random.randint(-45, 45)).bottomRotated(random.randint(-30, 30))]
+        self.legs = [Limb(*self.limbDimensions()).rotated(random.randint(70, 110)).bottomRotated(random.randint(-30, 30)),
+                     Limb(*self.limbDimensions()).rotated(random.randint(70, 110)).bottomRotated(random.randint(-30, 30))]
         self.attach()
 
     def limbDimensions (self) :
