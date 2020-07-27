@@ -1,6 +1,6 @@
 # Random People
 
-Juvenile attempt to create a lot of body shape vectors.
+Use these procedurally generated Stick Figures for experiments!
 
 To run:
 
